@@ -183,7 +183,7 @@ function printOneEntry($base, $name, $fileStat, $setting)
 		$buf = '<li>' . '<a href="' . $encoded .
 				$fileStat->isdir . '">' . sprintf($setting->nameFormat, htmlspecialchars($name, ENT_SUBSTITUTE) . "</a></li>\n");
 	} else {
-		$buf = '<tr><td>' . '<a href="' . $encoded . $fileSata->isdir . '">' . '<img class="icon" src="' . $setting->IconPath . '/' . $fileStat->img->imageName .
+		$buf = '<tbody><tr><td>' . '<a href="' . $encoded . $fileSata->isdir . '">' . '<img class="icon" src="' . $setting->IconPath . '/' . $fileStat->img->imageName .
 				'" alt="' . $fileStat->img->alt . '">';
 		if (strlen($name) > $setting->nameWidth) {
 			$name = substr($name, 0, $setting->nameWidth - 3) . '...';
@@ -197,7 +197,7 @@ function printOneEntry($base, $name, $fileStat, $setting)
 			$buf .= sprintf("<td>%7ldk  </td>", ( $fileStat->size + 1023 ) / 1024);
 		else
 			$buf .= '<td>       -  </td>';
-		$buf .= '<td>     </td>' . '</tr>' . $fileStat->img->desc;
+		$buf .= '<td>     </td>' . '</tr></tbody>' . $fileStat->img->desc;
 		$buf .= "\n";
 	}
 	echo $buf;
@@ -343,9 +343,9 @@ if (isset($setting->HeaderName)) {
 if ($using_fancyIndex) {
 	$header = "<ul>\n";
 } else {
-	$header = "<div id=\"table-list\"><table id=\"table-content\"><tr><th><img src=\"$setting->IconPath/blank.png\" alt=\"      \"> <a href=\"javascript:void(0)\" class=\"name\">";
+	$header = "<div id=\"table-list\"><table id=\"table-content\"><thead><tr><th><img src=\"$setting->IconPath/blank.png\" alt=\"      \"> <a href=\"javascript:void(0)\" class=\"name\">";
 	$header .= sprintf($setting->nameFormat, 'Name</a></th>');
-	$header .= " <th style=\"width:200px;\"><a href=\"javascript:void(0)\">Last modified</a></th>         <th style=\"width:30px\"><a href=\"javascript:void(0)\" data-sort-method='filesize'>Size</a></th>  <th><a href=\"javascript:void(0)\">Description</a></th></tr>\n";
+	$header .= " <th style=\"width:200px;\"><a href=\"javascript:void(0)\">Last modified</a></th>         <th style=\"width:30px\"><a href=\"javascript:void(0)\" data-sort-method='filesize'>Size</a></th>  <th><a href=\"javascript:void(0)\">Description</a></th></tr></thead>\n";
 }
 echo $header;
 
