@@ -18,6 +18,8 @@ html {
     background:white;
     margin-top: 30px;
     margin-bottom: 30px;
+    -moz-margin-bottom: 30px;
+    white-space: nowrap;
 }
 
 table {
@@ -25,6 +27,22 @@ table {
     margin: 0 auto;
     border-collapse: collapse;
     table-layout: fixed;
+    font-size: 0.88em;
+    padding-left:10px;
+    padding-right: 10px;
+    box-shadow: 0 0.55rem 1.25rem rgb(0 65 98 / 4%);
+}
+
+@media (max-width: 500px) {
+    table {
+        overflow-x: scroll;
+    }
+}
+
+.t-header th {
+    font-size: 1.2em;
+    background-color: white;
+    height: 1.8em;
 }
 
 th, td {
@@ -57,4 +75,6 @@ a:hover {
 
 address {
     color: rgb(100,100,100);
+    font-size: 0.8em;
+    font-style: normal;
 }
