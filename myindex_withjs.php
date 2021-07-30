@@ -177,31 +177,34 @@ function readDirList($path, &$excludes, &$map)
 
 function printOneEntry($base, $name, $fileStat, $setting)
 {
-	$encoded = str_replace(['%2F', '%26amp%3B'], ['/', '%26'],
-			rawurlencode($base . $fileStat->name));
-	if (isset($_SERVER['LS_FI_OFF']) && $_SERVER['LS_FI_OFF']) {
-		$buf = '<li>' . '<a href="' . $encoded .
-				$fileStat->isdir . '">' . sprintf($setting->nameFormat, htmlspecialchars($name, ENT_SUBSTITUTE) . "</a></li>\n");
-	} else {
-		$buf = '<tbody><tr><td>' . '<a href="' . $encoded . $fileSata->isdir . '">' . '<img class="icon" src="' . $setting->IconPath . '/' . $fileStat->img->imageName .
-				'" alt="' . $fileStat->img->alt . '">';
-		if (strlen($name) > $setting->nameWidth) {
-			$name = substr($name, 0, $setting->nameWidth - 3) . '...';
-		}
-		$buf .= sprintf($setting->nameFormat, htmlspecialchars($name, ENT_SUBSTITUTE) . "</a></td>");
-		if ($fileStat->mtime != -1)
-			$buf .= '<td>' . date($setting->Time_Format, $fileStat->mtime) . '</td>';
-		else
-			$buf .= '<td>                   </td>';
-		if ($fileStat->size != -1)
-			$buf .= sprintf("<td>%7ldk  </td>", ( $fileStat->size + 1023 ) / 1024);
-		else
-			$buf .= '<td>       -  </td>';
-		$buf .= '<td>     </td>' . '</tr></tbody>' . $fileStat->img->desc;
-		$buf .= "\n";
-	}
-	echo $buf;
+        $encoded = str_replace(['%2F', '%26amp%3B'], ['/', '%26'],
+                        rawurlencode($base . $fileStat->name)); 
+        if (isset($_SERVER['LS_FI_OFF']) && $_SERVER['LS_FI_OFF']) {
+                $buf = '<tr>' . '<a href="' . $encoded .
+                                $fileStat->isdir . '">' . sprintf($setting->nameFormat, htmlspecialchars($name, ENT_SUBSTITUTE) . "</a></tr>\n");
+        } else {
+                $no_sort = ($name == 'Parent Directory') ? ' data-sort-method="none"' : '';
+                $buf = "<tr${no_sort}><td>" . '<a href="' . $encoded . $fileSata->isdir . '">' . '<img class="icon" src="' . $setting->IconPath . '/' . $fileStat->img->imageName .
+                                '" alt="' . $fileStat->img->alt . '">';
+                if (strlen($name) > $setting->nameWidth) {
+                        $name = substr($name, 0, $setting->nameWidth - 3) . '...';
+                }
+                $buf .= sprintf($setting->nameFormat, htmlspecialchars($name, ENT_SUBSTITUTE) . "</a></td>");
+                if ($fileStat->mtime != -1)
+                        $buf .= '<td>' . date($setting->Time_Format, $fileStat->mtime) . '</td>';
+                else
+                        $buf .= '<td>                   </td>';
+                if ($fileStat->size != -1)
+//                        $buf .= sprintf("<td>%7ldk  </td>", ( $fileStat->size + 1023 ) / 1024);
+                        $buf .= sprintf("<td data-sort='1357656438'>%7ldk  </td>" , $fileStat->size);
+                else
+                        $buf .= '<td>       -  </td>';
+                $buf .= '<td>     </td>' . '</tr>' . $fileStat->img->desc;
+                $buf .= "\n";
+        }
+        echo $buf;
 }
+
 
 function printIncludes($path, $name)
 {
@@ -337,30 +340,31 @@ echo "<!DOCTYPE html>
     <h1>Index of ", $uri, "</h1>";
 
 if (isset($setting->HeaderName)) {
-	printIncludes($path, $setting->HeaderName);
+        printIncludes($path, $setting->HeaderName);
 }
 
 if ($using_fancyIndex) {
-	$header = "<ul>\n";
+        $header = "<table>\n";
 } else {
-	$header = "<div id=\"table-list\"><table id=\"table-content\"><thead><tr><th><img src=\"$setting->IconPath/blank.png\" alt=\"      \"> <a href=\"javascript:void(0)\" class=\"name\">";
-	$header .= sprintf($setting->nameFormat, 'Name</a></th>');
-	$header .= " <th style=\"width:200px;\"><a href=\"javascript:void(0)\">Last modified</a></th>         <th style=\"width:30px\"><a href=\"javascript:void(0)\" data-sort-method='filesize'>Size</a></th>  <th><a href=\"javascript:void(0)\">Description</a></th></tr></thead>\n";
+        $header = "<div id=\"table-list\"><table id=\"table-content\"><thead class=\"t-header\"><tr><th><a href=\"javascript:void(0)\" class=\"name\">";
+        $header .= sprintf($setting->nameFormat, 'Name</a></th>');
+        $header .= " <th><a href=\"javascript:void(0)\">Last modified</a></th>         <th><a href=\"javascript:void(0)\">Size</a></th>  <th><a href=\"javascript:void(0)\">Descri>
 }
 echo $header;
 
 if ($uri != '/') {
-	$fileStat = new FileStat('');
-	$fileStat->mtime = filemtime($path);
-	$fileStat->img = $map->parent_img;
-	$fileStat->size = -1;
-	$base = substr($uri, 0, strlen($uri) - 1);
-	$off = strrpos($base, '/');
-	if ($off !== false) {
-		$base = substr($base, 0, $off + 1);
-		printOneEntry($base, 'Parent Directory', $fileStat, $setting);
-	}
+        $fileStat = new FileStat('');
+        $fileStat->mtime = filemtime($path);
+        $fileStat->img = $map->parent_img;
+        $fileStat->size = -1;
+        $base = substr($uri, 0, strlen($uri) - 1);
+        $off = strrpos($base, '/');
+        if ($off !== false) {
+                $base = substr($base, 0, $off + 1);
+                printOneEntry($base, 'Parent Directory', $fileStat, $setting);
+        }
 }
+
 
 printFileList($list, $uri, $setting);
 
