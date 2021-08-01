@@ -1,5 +1,6 @@
 <?php
 
+//$_SERVER['LS_FI_OFF'] = true;
 // To customize look & feel of generated index page
 class UserSettings
 {
@@ -65,13 +66,11 @@ class AllImgs
 			new IMG_Mapping(['gif', 'png', 'jpg', 'jpeg', 'tif', 'tiff', 'bmp', 'svg', 'raw'],
 					'image.svg', '[IMG]'),
 			new IMG_Mapping(['html', 'htm', 'shtml', 'php', 'phtml', 'css', 'js'],
-					'file.svg', '[HTM]'),
+					'code.svg', '[HTM]'),
 			new IMG_Mapping(['txt', 'md5', 'c', 'cpp', 'cc', 'h', 'sh'],
 					'file-text.svg', '[TXT]'),
-			new IMG_Mapping(['gz', 'tgz', 'zip', 'Z', 'z'],
+			new IMG_Mapping(['gz', 'tgz', 'zip', 'Z', 'z', 'bin', 'exe'],
 					'file.svg', '[CMP]'),
-			new IMG_Mapping(['bin', 'exe'],
-					'file.svg', '[BIN]'),
 			new IMG_Mapping(['mpg', 'avi', 'mpeg', 'ram', 'wmv'],
 					'video.svg', '[VID]'),
 			new IMG_Mapping(['mp3', 'mp2', 'ogg', 'wav', 'wma', 'aac', 'mp4', 'rm'],
@@ -180,8 +179,8 @@ function printOneEntry($base, $name, $fileStat, $setting)
 	$encoded = str_replace(['%2F', '%26amp%3B'], ['/', '%26'],
 			rawurlencode($base . $fileStat->name));
 	if (isset($_SERVER['LS_FI_OFF']) && $_SERVER['LS_FI_OFF']) {
-		$buf = '<li>' . '<a href="' . $encoded .
-				$fileStat->isdir . '">' . sprintf($setting->nameFormat, htmlspecialchars($name, ENT_SUBSTITUTE) . "</a></li>\n");
+		$buf = '<tr><td>' . '<a href="' . $encoded .
+				$fileStat->isdir . '">' . sprintf($setting->nameFormat, htmlspecialchars($name, ENT_SUBSTITUTE) . "</a></td></tr>\n");
 	} else {
 		$buf = '<tr><td>' . '<a href="' . $encoded . $fileSata->isdir . '">' . '<img class="icon" src="' . $setting->IconPath . '/' . $fileStat->img->imageName .
 				'" alt="' . $fileStat->img->alt . '">';
@@ -194,7 +193,8 @@ function printOneEntry($base, $name, $fileStat, $setting)
 		else
 			$buf .= '<td>                   </td>';
 		if ($fileStat->size != -1)
-			$buf .= sprintf("<td>%7ldk  </td>", ( $fileStat->size + 1023 ) / 1024);
+//			$buf .= sprintf("<td>%7ldk  </td>", ( $fileStat->size + 1023 ) / 1024);
+			$buf .= sprintf("<td>%7ldk  </td>", ( $fileStat->size));
 		else
 			$buf .= '<td>       -  </td>';
 		$buf .= '<td>     </td>' . '</tr>' . $fileStat->img->desc;
@@ -346,11 +346,11 @@ if (isset($setting->HeaderName)) {
 }
 
 if ($using_fancyIndex) {
-	$header = "<ul>\n";
+	$header = "<div id=\"table-list\" role=\"table-list\" aria-labelledby=\"index-table\" tabindex=\"0\"><table id=\"table-content\">\n";
 } else {
-	$header = "<div id=\"table-list\"><table><tr><th><img src=\"$setting->IconPath/blank.png\" alt=\"      \"> <a class=\"name\" href='?$NameSort'>";
+	$header = "<div id=\"table-list\" role=\"table-list\" aria-labelledby=\"index-table\" tabindex=\"0\"><table id=\"table-content\"><thead class=\"t-header\"><tr><th><a class=\"name\" href='?$NameSort'>";
 	$header .= sprintf($setting->nameFormat, 'Name</a></th>');
-	$header .= " <th style=\"width:200px;\"><a href='?$ModSort'>Last modified</a></th>         <th style=\"width:30px\"><a href='?$SizeSort'>Size</a></th>  <th><a href='?$DescSort'>Description</a></th></tr>\n";
+	$header .= " <th><a href='?$ModSort'>Last modified</a></th>         <th><a href='?$SizeSort'>Size</a></th>  <th><a href='?$DescSort'>Description</a></th></tr></thead>\n";
 }
 echo $header;
 
@@ -371,7 +371,7 @@ usort($list, $cmpFunc);
 printFileList($list, $uri, $setting);
 
 if ($using_fancyIndex) {
-	echo "</ul>\n";
+	echo "</table></div>\n";
 } else {
 	echo "</table></div>";
 }
@@ -380,7 +380,7 @@ if (isset($setting->ReadmeName)) {
 	printIncludes($path, $setting->ReadmeName);
 }
 
-echo '<address>Served by LiteSpeed Web Server at ' . $_SERVER['SERVER_NAME'] . ' Port ' . $_SERVER['SERVER_PORT'] . "</address>
+echo '<address>Proudly Served by LiteSpeed Web Server at ' . $_SERVER['SERVER_NAME'] . ' Port ' . $_SERVER['SERVER_PORT'] . "</address>
 </div>
 </body>
 </html>";
