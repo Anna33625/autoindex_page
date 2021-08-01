@@ -1,5 +1,6 @@
 <?php
 
+//$_SERVER['LS_FI_OFF'] = true;
 // To customize look & feel of generated index page
 class UserSettings
 {
@@ -68,10 +69,8 @@ class AllImgs
 					'file.svg', '[HTM]'),
 			new IMG_Mapping(['txt', 'md5', 'c', 'cpp', 'cc', 'h', 'sh'],
 					'file-text.svg', '[TXT]'),
-			new IMG_Mapping(['gz', 'tgz', 'zip', 'Z', 'z'],
+			new IMG_Mapping(['gz', 'tgz', 'zip', 'Z', 'z', 'bin', 'exe'],
 					'file.svg', '[CMP]'),
-			new IMG_Mapping(['bin', 'exe'],
-					'file.svg', '[BIN]'),
 			new IMG_Mapping(['mpg', 'avi', 'mpeg', 'ram', 'wmv'],
 					'video.svg', '[VID]'),
 			new IMG_Mapping(['mp3', 'mp2', 'ogg', 'wav', 'wma', 'aac', 'mp4', 'rm'],
@@ -180,10 +179,10 @@ function printOneEntry($base, $name, $fileStat, $setting)
         $encoded = str_replace(['%2F', '%26amp%3B'], ['/', '%26'],
                         rawurlencode($base . $fileStat->name)); 
         if (isset($_SERVER['LS_FI_OFF']) && $_SERVER['LS_FI_OFF']) {
-                $buf = '<tr>' . '<a href="' . $encoded .
-                                $fileStat->isdir . '">' . sprintf($setting->nameFormat, htmlspecialchars($name, ENT_SUBSTITUTE) . "</a></tr>\n");
+                $buf = '<tr><td>' . '<a href="' . $encoded .
+                                $fileStat->isdir . '">' . sprintf($setting->nameFormat, htmlspecialchars($name, ENT_SUBSTITUTE) . "</a></td></tr>\n");
         } else {
-                $no_sort = ($name == 'Parent Directory') ? ' data-sort-method="none"' : '';
+        	$no_sort = ($name == 'Parent Directory') ? ' data-sort-method="none"' : '';
                 $buf = "<tr${no_sort}><td>" . '<a href="' . $encoded . $fileSata->isdir . '">' . '<img class="icon" src="' . $setting->IconPath . '/' . $fileStat->img->imageName .
                                 '" alt="' . $fileStat->img->alt . '">';
                 if (strlen($name) > $setting->nameWidth) {
@@ -195,8 +194,8 @@ function printOneEntry($base, $name, $fileStat, $setting)
                 else
                         $buf .= '<td>                   </td>';
                 if ($fileStat->size != -1)
-//                        $buf .= sprintf("<td>%7ldk  </td>", ( $fileStat->size + 1023 ) / 1024);
-                        $buf .= sprintf("<td data-sort='1357656438'>%7ldk  </td>" , $fileStat->size);
+//                        $buf .= sprintf("<td data-sort='1078673085'>%7ldk  </td>", ( $fileStat->size + 1023 ) / 1024);
+			$buf .= sprintf("<td data-sort='%d'>%7ldk  </td>" , $fileStat->size , $fileStat->size);
                 else
                         $buf .= '<td>       -  </td>';
                 $buf .= '<td>     </td>' . '</tr>' . $fileStat->img->desc;
@@ -204,7 +203,6 @@ function printOneEntry($base, $name, $fileStat, $setting)
         }
         echo $buf;
 }
-
 
 function printIncludes($path, $name)
 {
@@ -334,42 +332,41 @@ echo "<!DOCTYPE html>
   <script src=\"/_autoindex/assets/js/tablesort.number.js\"></script>
   <script src=\"/_autoindex/assets/js/tablesort.filesize.js\"></script>
   <script src=\"/_autoindex/assets/js/tablesort.date.js\"></script>
-  <title>Index of ", $uri, "</title></head>
+  <title>Index of ", $uri, " - with JS</title></head>
   <body>
     <div class=\"content\">
-    <h1>Index of ", $uri, "</h1>";
+    <h1>Index of ", $uri, " - with JS</h1>";
 
 if (isset($setting->HeaderName)) {
-        printIncludes($path, $setting->HeaderName);
+	printIncludes($path, $setting->HeaderName);
 }
 
 if ($using_fancyIndex) {
-        $header = "<table>\n";
+        $header = "<div id=\"table-list\" role=\"table-list\" aria-labelledby=\"index-table\" tabindex=\"0\"><table id=\"table-content\">\n";
 } else {
-        $header = "<div id=\"table-list\"><table id=\"table-content\"><thead class=\"t-header\"><tr><th><a href=\"javascript:void(0)\" class=\"name\">";
-        $header .= sprintf($setting->nameFormat, 'Name</a></th>');
-        $header .= " <th><a href=\"javascript:void(0)\">Last modified</a></th>         <th><a href=\"javascript:void(0)\">Size</a></th>  <th><a href=\"javascript:void(0)\">Descri>
+	$header = "<div id=\"table-list\" role=\"table-list\" aria-labelledby=\"index-table\" tabindex=\"0\"><table id=\"table-content\"><thead class=\"t-header\"><tr><th><a href=\"javascript:void(0)\" class=\"name\">";
+	$header .= sprintf($setting->nameFormat, 'Name</a></th>');
+	$header .= " <th><a href=\"javascript:void(0)\">Last modified</a></th>         <th data-sort-method='number'><a href=\"javascript:void(0)\">Size</a></th>  <th><a href=\"javascript:void(0)\">Description</a></th></tr></thead>\n";
 }
 echo $header;
 
 if ($uri != '/') {
-        $fileStat = new FileStat('');
-        $fileStat->mtime = filemtime($path);
-        $fileStat->img = $map->parent_img;
-        $fileStat->size = -1;
-        $base = substr($uri, 0, strlen($uri) - 1);
-        $off = strrpos($base, '/');
-        if ($off !== false) {
-                $base = substr($base, 0, $off + 1);
-                printOneEntry($base, 'Parent Directory', $fileStat, $setting);
-        }
+	$fileStat = new FileStat('');
+	$fileStat->mtime = filemtime($path);
+	$fileStat->img = $map->parent_img;
+	$fileStat->size = -1;
+	$base = substr($uri, 0, strlen($uri) - 1);
+	$off = strrpos($base, '/');
+	if ($off !== false) {
+		$base = substr($base, 0, $off + 1);
+		printOneEntry($base, 'Parent Directory', $fileStat, $setting);
+	}
 }
-
 
 printFileList($list, $uri, $setting);
 
 if ($using_fancyIndex) {
-	echo "</ul>\n";
+	echo "</table></div>\n";
 } else {
 	echo "</table></div>";
 }
@@ -378,7 +375,7 @@ if (isset($setting->ReadmeName)) {
 	printIncludes($path, $setting->ReadmeName);
 }
 
-echo '<address>by LiteSpeed Web Server at ' . $_SERVER['SERVER_NAME'] . ' Port ' . $_SERVER['SERVER_PORT'] . "</address>
+echo '<address>Proudly Served by LiteSpeed Web Server at ' . $_SERVER['SERVER_NAME'] . ' Port ' . $_SERVER['SERVER_PORT'] . "</address>
 </div>
 <script>new Tablesort(document.getElementById('table-content'));</script>
 </body>
