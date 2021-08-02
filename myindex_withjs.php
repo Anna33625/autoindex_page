@@ -62,20 +62,22 @@ class AllImgs
 
 	public function __construct()
 	{
-		$this->mapping = [
-			new IMG_Mapping(['gif', 'png', 'jpg', 'jpeg', 'tif', 'tiff', 'bmp', 'svg', 'raw'],
-					'image.svg', '[IMG]'),
-			new IMG_Mapping(['html', 'htm', 'shtml', 'php', 'phtml', 'css', 'js'],
-					'file.svg', '[HTM]'),
-			new IMG_Mapping(['txt', 'md5', 'c', 'cpp', 'cc', 'h', 'sh'],
-					'file-text.svg', '[TXT]'),
-			new IMG_Mapping(['gz', 'tgz', 'zip', 'Z', 'z', 'bin', 'exe'],
-					'file.svg', '[CMP]'),
-			new IMG_Mapping(['mpg', 'avi', 'mpeg', 'ram', 'wmv'],
-					'video.svg', '[VID]'),
-			new IMG_Mapping(['mp3', 'mp2', 'ogg', 'wav', 'wma', 'aac', 'mp4', 'rm'],
-					'music.svg', '[SND]'),
-		];
+                $this->mapping = [
+                        new IMG_Mapping(['gif', 'png', 'jpg', 'jpeg', 'tif', 'tiff', 'bmp', 'svg', 'raw'],
+                                        'image.svg', '[IMG]'),
+                        new IMG_Mapping(['html', 'htm', 'shtml'],
+                                        'html.svg', '[HTM]'),
+                        new IMG_Mapping(['php', 'phtml', 'css', 'js'],
+                                        'js.svg', '[JS]'),
+                        new IMG_Mapping(['txt', 'md5', 'c', 'cpp', 'cc', 'h', 'sh'],
+                                        'file-text.svg', '[TXT]'),
+                        new IMG_Mapping(['gz', 'tgz', 'zip', 'Z', 'z', 'bin', 'exe'],
+                                        'file.svg', '[CMP]'),
+                        new IMG_Mapping(['mpg', 'avi', 'mpeg', 'ram', 'wmv'],
+                                        'video.svg', '[VID]'),
+                        new IMG_Mapping(['mp3', 'mp2', 'ogg', 'wav', 'wma', 'aac', 'mp4', 'rm'],
+                                        'music.svg', '[SND]'),
+                ];
 
 		$this->default_img = new IMG_Mapping(null, 'file.svg', 'unknown', '');
 		$this->dir_img = new IMG_Mapping(null, 'folder.svg', 'directory', '');
