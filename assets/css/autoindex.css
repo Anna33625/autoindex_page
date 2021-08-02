@@ -94,13 +94,6 @@ a:hover {
     vertical-align: sub;
     padding-right: 0.5em;
     height: 1.2em;
-    color: #0047AB;
-    fill: red;
-}
-
-[role="table-list"][aria-labelledby][tabindex] {
-  overflow: auto;
-  border: 0.1em solid #d6d6d6;
 }
 
 [role="table-list"][aria-labelledby][tabindex]:focus {
@@ -109,12 +102,6 @@ a:hover {
           box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.5);
   outline: 0.1em solid rgba(0, 0, 0, 0.1);
 }
-
-[role="table-list"][aria-labelledby][tabindex] table {
-  margin: 0;
-  border: none;
-}
-
 
 address {
     color: rgb(100,100,100);
