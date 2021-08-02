@@ -348,7 +348,7 @@ if (isset($setting->HeaderName)) {
 if ($using_fancyIndex) {
 	$header = "<div id=\"table-list\" role=\"table-list\" aria-labelledby=\"index-table\" tabindex=\"0\"><table id=\"table-content\">\n";
 } else {
-	$header = "<div id=\"table-list\" role=\"table-list\" aria-labelledby=\"index-table\" tabindex=\"0\"><table id=\"table-content\"><thead class=\"t-header\"><tr><th><a class=\"name\" href='?$NameSort'>";
+	$header = "<div id=\"table-list\"><table id=\"table-content\"><thead class=\"t-header\"><tr><th><a class=\"name\" href='?$NameSort'>";
 	$header .= sprintf($setting->nameFormat, 'Name</a></th>');
 	$header .= " <th><a href='?$ModSort'>Last modified</a></th>         <th><a href='?$SizeSort'>Size</a></th>  <th><a href='?$DescSort'>Description</a></th></tr></thead>\n";
 }
