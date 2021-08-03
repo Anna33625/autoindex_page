@@ -184,9 +184,8 @@ function printOneEntry($base, $name, $fileStat, $setting)
                 $buf = '<tr><td>' . '<a href="' . $encoded .
                                 $fileStat->isdir . '">' . sprintf($setting->nameFormat, htmlspecialchars($name, ENT_SUBSTITUTE) . "</a></td></tr>\n");
         } else {
-//		$no_sort = ($name == 'Parent Directory' || $fileStat->size == -1) ? ' data-sort-method="none"' : '';
                 $no_sort = ($name == 'Parent Directory') ? ' data-sort-method="none"' : '';
-                $buf = "<tr${no_sort}><td>" . '<a href="' . $encoded . $fileSata->isdir . '">' . '<img class="icon" src="' . $setting->IconPath . '/' . $fileStat->img->imageName .
+                $buf = "<tr${no_sort}><td>" . '<a href="' . $encoded . $fileSata->isdir . '">' . '<img class="icon" fill="#FFFFFF" src="' . $setting->IconPath . '/' . $fileStat->img->imageName .
                                 '" alt="' . $fileStat->img->alt . '">';
                 if (strlen($name) > $setting->nameWidth) {
                         $name = substr($name, 0, $setting->nameWidth - 3) . '...';
@@ -317,6 +316,15 @@ $uri = htmlentities($uri, ENT_COMPAT, 'UTF-8');
 
 $setting = new UserSettings();
 $map = new AllImgs();
+$sortOrder = $_SERVER['QUERY_STRING'];
+if ($sortOrder == '' || strlen($sortOrder) != 2 || !in_array($sortOrder, ['NA', 'ND', 'MA', 'MD', 'SA', 'SD', 'DA', 'DD'])) {
+	$sortOrder = 'NA'; // set to default
+}
+
+$NameSort = ($sortOrder == 'NA') ? 'ND' : 'NA';
+$ModSort = ($sortOrder == 'MA') ? 'MD' : 'MA';
+$SizeSort = ($sortOrder == 'SA') ? 'SD' : 'SA';
+$DescSort = ($sortOrder == 'DA') ? 'DD' : 'DA';
 
 $list = readDirList($path, $setting->Exclude_Patterns, $map);
 if ($list === null) {
@@ -349,9 +357,9 @@ if (isset($setting->HeaderName)) {
 if ($using_fancyIndex) {
         $header = "<div id=\"table-list\"><table id=\"table-content\">\n";
 } else {
-        $header = "<div id=\"table-list\"><table id=\"table-content\"><thead class=\"t-header\"><tr><th><a class=\"name\" href=\"javascript:void(0)\" onclick=\"return false\" >";
+        $header = "<div id=\"table-list\"><table id=\"table-content\"><thead class=\"t-header\"><tr><th><a class=\"name\" href='?$NameSort' onclick=\"return false\" >";
 	$header .= sprintf($setting->nameFormat, 'Name</a></th>');
-	$header .= " <th><a href=\"javascript:void(0)\" onclick=\"return false\">Last modified</a></th>         <th data-sort-method='number'><a href=\"javascript:void(0)\" onclick=\"return false\">Size</a></th>  <th><a href=\"javascript:void(0)\" onclick=\"return false\">Description</a></th></tr></thead>\n";
+	$header .= " <th><a href='?$ModSort' onclick=\"return false\">Last Modified</a></th>         <th data-sort-method='number'><a href='?$SizeSort' onclick=\"return false\">Size</a></th>  <th><a href='?$DescSort' onclick=\"return false\">Description</a></th></tr></thead>\n";
 }
 echo $header;
 
@@ -368,6 +376,8 @@ if ($uri != '/') {
 	}
 }
 
+$cmpFunc = "cmp$sortOrder";
+usort($list, $cmpFunc);
 printFileList($list, $uri, $setting);
 
 if ($using_fancyIndex) {
