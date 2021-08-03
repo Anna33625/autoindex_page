@@ -62,22 +62,22 @@ class AllImgs
 
 	public function __construct()
 	{
-                $this->mapping = [
-                        new IMG_Mapping(['gif', 'png', 'jpg', 'jpeg', 'tif', 'tiff', 'bmp', 'svg', 'raw'],
-                                        'image.svg', '[IMG]'),
-///                     new IMG_Mapping(['html', 'htm', 'shtml'],
-//                                      'html.svg', '[HTM]'),
-//                      new IMG_Mapping(['php', 'phtml', 'css', 'js'],
+		$this->mapping = [
+			new IMG_Mapping(['gif', 'png', 'jpg', 'jpeg', 'tif', 'tiff', 'bmp', 'svg', 'raw'],
+					'image.svg', '[IMG]'),
+///			new IMG_Mapping(['html', 'htm', 'shtml'],
+//					'html.svg', '[HTM]'),
+//			new IMG_Mapping(['php', 'phtml', 'css', 'js'],
 //                                        'js.svg', '[JS]'),
-                        new IMG_Mapping(['txt', 'md5', 'c', 'cpp', 'cc', 'h', 'sh', 'html', 'htm', 'shtml', 'php', 'phtml', 'css', 'js'],
-                                        'file-text.svg', '[TXT]'),
-                        new IMG_Mapping(['gz', 'tgz', 'zip', 'Z', 'z', 'bin', 'exe'],
-                                        'file.svg', '[CMP]'),
-                        new IMG_Mapping(['mpg', 'avi', 'mpeg', 'ram', 'wmv'],
-                                        'video.svg', '[VID]'),
-                        new IMG_Mapping(['mp3', 'mp2', 'ogg', 'wav', 'wma', 'aac', 'mp4', 'rm'],
-                                        'music.svg', '[SND]'),
-                ];
+			new IMG_Mapping(['txt', 'md5', 'c', 'cpp', 'cc', 'h', 'sh', 'html', 'htm', 'shtml', 'php', 'phtml', 'css', 'js'],
+					'file-text.svg', '[TXT]'),
+			new IMG_Mapping(['gz', 'tgz', 'zip', 'Z', 'z', 'bin', 'exe'],
+					'file.svg', '[CMP]'),
+			new IMG_Mapping(['mpg', 'avi', 'mpeg', 'ram', 'wmv'],
+					'video.svg', '[VID]'),
+			new IMG_Mapping(['mp3', 'mp2', 'ogg', 'wav', 'wma', 'aac', 'mp4', 'rm'],
+					'music.svg', '[SND]'),
+		];
 
 		$this->default_img = new IMG_Mapping(null, 'file.svg', 'unknown', '');
 		$this->dir_img = new IMG_Mapping(null, 'folder.svg', 'directory', '');
@@ -184,7 +184,7 @@ function printOneEntry($base, $name, $fileStat, $setting)
                 $buf = '<tr><td>' . '<a href="' . $encoded .
                                 $fileStat->isdir . '">' . sprintf($setting->nameFormat, htmlspecialchars($name, ENT_SUBSTITUTE) . "</a></td></tr>\n");
         } else {
-//              $no_sort = ($name == 'Parent Directory' || $fileStat->size == -1) ? ' data-sort-method="none"' : '';
+//		$no_sort = ($name == 'Parent Directory' || $fileStat->size == -1) ? ' data-sort-method="none"' : '';
                 $no_sort = ($name == 'Parent Directory') ? ' data-sort-method="none"' : '';
                 $buf = "<tr${no_sort}><td>" . '<a href="' . $encoded . $fileSata->isdir . '">' . '<img class="icon" src="' . $setting->IconPath . '/' . $fileStat->img->imageName .
                                 '" alt="' . $fileStat->img->alt . '">';
@@ -194,15 +194,15 @@ function printOneEntry($base, $name, $fileStat, $setting)
                 $buf .= sprintf($setting->nameFormat, htmlspecialchars($name, ENT_SUBSTITUTE) . "</a></td>");
                 if ($fileStat->mtime != -1 && $name != 'Parent Directory' )
 //                        $buf .= '<td>' . date($setting->Time_Format, $fileStat->mtime) . '</td>';
-                        $buf .= '<td data-sort=' . strtotime(date($setting->Time_Format, $fileStat->mtime)) . '>' . date($setting->Time_Format, $fileStat->mtime) . '</td>';
+			$buf .= '<td data-sort=' . strtotime(date($setting->Time_Format, $fileStat->mtime)) . '>' . date($setting->Time_Format, $fileStat->mtime) . '</td>';
                 else
                         $buf .= '<td>                   </td>';
                 if ($fileStat->size != -1)
 //                        $buf .= sprintf("<td>%7ldk  </td>", ( $fileStat->size + 1023 ) / 1024);
-                        $buf .= sprintf("<td data-sort='%d'>%7ldk  </td>" , $fileStat->size , ( $fileStat->size + 1023 ) / 1024);
+			$buf .= sprintf("<td data-sort='%d'>%7ldk  </td>" , $fileStat->size , ( $fileStat->size + 1023 ) / 1024);
                 else
 //                        $buf .= '<td>       -  </td>';
-                        $buf .= ($name == 'Parent Directory') ? '<td>         </td>' : '<td>       -  </td>';
+			$buf .= ($name == 'Parent Directory') ? '<td>         </td>' : '<td>       -  </td>';
                 $buf .= '<td>     </td>' . '</tr>' . $fileStat->img->desc;
                 $buf .= "\n";
         }
@@ -350,8 +350,8 @@ if ($using_fancyIndex) {
         $header = "<div id=\"table-list\"><table id=\"table-content\">\n";
 } else {
         $header = "<div id=\"table-list\"><table id=\"table-content\"><thead class=\"t-header\"><tr><th><a class=\"name\" href=\"javascript:void(0)\" onclick=\"return false\" >";
-        $header .= sprintf($setting->nameFormat, 'Name</a></th>');
-        $header .= " <th><a href=\"javascript:void(0)\" onclick=\"return false\">Last modified</a></th>         <th data-sort-method='number'><a href=\"javascript:void(0)\" onclick=\"return false\">Siz>
+	$header .= sprintf($setting->nameFormat, 'Name</a></th>');
+	$header .= " <th><a href=\"javascript:void(0)\" onclick=\"return false\">Last modified</a></th>         <th data-sort-method='number'><a href=\"javascript:void(0)\" onclick=\"return false\">Size</a></th>  <th><a href=\"javascript:void(0)\" onclick=\"return false\">Description</a></th></tr></thead>\n";
 }
 echo $header;
 
