@@ -96,7 +96,7 @@ a:hover {
     text-decoration: underline;
 }
 
-a:visited {
+td a:visited {
     color: #5a5a5a;
 }
 
