@@ -10,8 +10,14 @@ html {
     padding-right: 1em;
 }
 
+@media only screen and (max-width: 640px) {
+  h1 {
+      font-size: 1.5em;
+  }
+}
+
 .name {
-    padding-left:1.3em;
+    padding-left:1.5em;
 }
 
 #table-list {
@@ -39,7 +45,7 @@ tr:hover {
 }
 
 .t-header th {
-    font-size: 1.2em;
+    font-size: 1em;
     background-color: white;
     height: 1.8em;
 }
@@ -72,11 +78,11 @@ td:nth-child(1) {
 }
 
 td:nth-child(2) {
-    color: #333;
+    color: #666;
 }
 
 td:nth-child(3) {
-    color: #333;
+    color: #666;
     text-align: right;
 }
 
@@ -96,14 +102,22 @@ a:hover {
     text-decoration: underline;
 }
 
+td a {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+}
+
 td a:visited {
     color: #5a5a5a;
 }
 
 .icon {
     vertical-align: sub;
-    padding-right: 0.5em;
+    padding-right: 0.75em;
     height: 1.2em;
+    filter: grayscale(.8) brightness(2);
 }
 
 address {
