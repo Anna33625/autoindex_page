@@ -65,10 +65,6 @@ class AllImgs
 		$this->mapping = [
 			new IMG_Mapping(['gif', 'png', 'jpg', 'jpeg', 'tif', 'tiff', 'bmp', 'svg', 'raw'],
 					'image.svg', '[IMG]'),
-///			new IMG_Mapping(['html', 'htm', 'shtml'],
-//					'html.svg', '[HTM]'),
-//			new IMG_Mapping(['php', 'phtml', 'css', 'js'],
-//                                        'js.svg', '[JS]'),
 			new IMG_Mapping(['txt', 'md5', 'c', 'cpp', 'cc', 'h', 'sh', 'html', 'htm', 'shtml', 'php', 'phtml', 'css', 'js'],
 					'file-text.svg', '[TXT]'),
 			new IMG_Mapping(['gz', 'tgz', 'zip', 'Z', 'z', 'bin', 'exe'],
@@ -192,15 +188,12 @@ function printOneEntry($base, $name, $fileStat, $setting)
                 }
                 $buf .= sprintf($setting->nameFormat, htmlspecialchars($name, ENT_SUBSTITUTE) . "</a></td>");
                 if ($fileStat->mtime != -1 && $name != 'Parent Directory' )
-//                        $buf .= '<td>' . date($setting->Time_Format, $fileStat->mtime) . '</td>';
 			$buf .= '<td data-sort=' . strtotime(date($setting->Time_Format, $fileStat->mtime)) . '>' . date($setting->Time_Format, $fileStat->mtime) . '</td>';
                 else
                         $buf .= '<td>                   </td>';
                 if ($fileStat->size != -1)
-//                        $buf .= sprintf("<td>%7ldk  </td>", ( $fileStat->size + 1023 ) / 1024);
 			$buf .= sprintf("<td data-sort='%d'>%7ldk  </td>" , $fileStat->size , ( $fileStat->size + 1023 ) / 1024);
                 else
-//                        $buf .= '<td>       -  </td>';
 			$buf .= ($name == 'Parent Directory') ? '<td>         </td>' : '<td>       -  </td>';
                 $buf .= '<td>     </td>' . '</tr>' . $fileStat->img->desc;
                 $buf .= "\n";
