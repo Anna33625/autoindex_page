@@ -34,6 +34,10 @@ table {
             box-shadow: 0 0.55rem 1.25rem rgb(0 65 98 / 4%);
 }
 
+tr:hover {
+  background-color: rgb(220 220 220) !important;
+}
+
 .t-header th {
     font-size: 1.2em;
     background-color: white;
@@ -64,6 +68,7 @@ th:nth-child(4) {
 
 td:nth-child(1) {
     padding-left: 2em;
+    overflow-wrap: break-word;
 }
 
 td:nth-child(2) {
@@ -88,6 +93,11 @@ a {
 
 a:hover {
     color:#0096FF;
+    text-decoration: underline;
+}
+
+a:visited {
+    color: #5a5a5a;
 }
 
 .icon {
