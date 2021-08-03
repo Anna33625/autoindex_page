@@ -20,7 +20,7 @@ class UserSettings
 		'*,t',
 		'*.lsz',
 		];
-	public $Time_Format = ' d-M-Y H:i ';
+	public $Time_Format = ' Y-m-d H:i ';
 	public $IconPath = '/_autoindex/icons';
 	public $nameWidth = 80;
 	public $nameFormat;
@@ -65,11 +65,11 @@ class AllImgs
                 $this->mapping = [
                         new IMG_Mapping(['gif', 'png', 'jpg', 'jpeg', 'tif', 'tiff', 'bmp', 'svg', 'raw'],
                                         'image.svg', '[IMG]'),
-                        new IMG_Mapping(['html', 'htm', 'shtml'],
-                                        'html.svg', '[HTM]'),
-                        new IMG_Mapping(['php', 'phtml', 'css', 'js'],
-                                        'js.svg', '[JS]'),
-                        new IMG_Mapping(['txt', 'md5', 'c', 'cpp', 'cc', 'h', 'sh'],
+///                     new IMG_Mapping(['html', 'htm', 'shtml'],
+//                                      'html.svg', '[HTM]'),
+//                      new IMG_Mapping(['php', 'phtml', 'css', 'js'],
+//                                        'js.svg', '[JS]'),
+                        new IMG_Mapping(['txt', 'md5', 'c', 'cpp', 'cc', 'h', 'sh', 'html', 'htm', 'shtml', 'php', 'phtml', 'css', 'js'],
                                         'file-text.svg', '[TXT]'),
                         new IMG_Mapping(['gz', 'tgz', 'zip', 'Z', 'z', 'bin', 'exe'],
                                         'file.svg', '[CMP]'),
@@ -184,7 +184,8 @@ function printOneEntry($base, $name, $fileStat, $setting)
                 $buf = '<tr><td>' . '<a href="' . $encoded .
                                 $fileStat->isdir . '">' . sprintf($setting->nameFormat, htmlspecialchars($name, ENT_SUBSTITUTE) . "</a></td></tr>\n");
         } else {
-                $no_sort = ($name == 'Parent Directory' || $fileStat->size == -1) ? ' data-sort-method="none"' : '';
+//              $no_sort = ($name == 'Parent Directory' || $fileStat->size == -1) ? ' data-sort-method="none"' : '';
+                $no_sort = ($name == 'Parent Directory') ? ' data-sort-method="none"' : '';
                 $buf = "<tr${no_sort}><td>" . '<a href="' . $encoded . $fileSata->isdir . '">' . '<img class="icon" src="' . $setting->IconPath . '/' . $fileStat->img->imageName .
                                 '" alt="' . $fileStat->img->alt . '">';
                 if (strlen($name) > $setting->nameWidth) {
@@ -192,7 +193,8 @@ function printOneEntry($base, $name, $fileStat, $setting)
                 }
                 $buf .= sprintf($setting->nameFormat, htmlspecialchars($name, ENT_SUBSTITUTE) . "</a></td>");
                 if ($fileStat->mtime != -1 && $name != 'Parent Directory' )
-                        $buf .= '<td>' . date($setting->Time_Format, $fileStat->mtime) . '</td>';
+//                        $buf .= '<td>' . date($setting->Time_Format, $fileStat->mtime) . '</td>';
+                        $buf .= '<td data-sort=' . strtotime(date($setting->Time_Format, $fileStat->mtime)) . '>' . date($setting->Time_Format, $fileStat->mtime) . '</td>';
                 else
                         $buf .= '<td>                   </td>';
                 if ($fileStat->size != -1)
@@ -347,9 +349,9 @@ if (isset($setting->HeaderName)) {
 if ($using_fancyIndex) {
         $header = "<div id=\"table-list\"><table id=\"table-content\">\n";
 } else {
-        $header = "<div id=\"table-list\"><table id=\"table-content\"><thead class=\"t-header\"><tr><th><a class=\"name\" href=\"javascript:void(0)\" onclick=\"return:false;\">";
+        $header = "<div id=\"table-list\"><table id=\"table-content\"><thead class=\"t-header\"><tr><th><a class=\"name\" href=\"javascript:void(0)\" onclick=\"return false\" >";
         $header .= sprintf($setting->nameFormat, 'Name</a></th>');
-        $header .= " <th data-sort-method='date'><a href=\"javascript:void(0)\" onclick=\"return:false;\">Last modified</a></th>         <th data-sort-method='number'><a href=\"javascript:void(0)\" onc>
+        $header .= " <th><a href=\"javascript:void(0)\" onclick=\"return false\">Last modified</a></th>         <th data-sort-method='number'><a href=\"javascript:void(0)\" onclick=\"return false\">Siz>
 }
 echo $header;
 
