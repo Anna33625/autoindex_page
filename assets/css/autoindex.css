@@ -104,7 +104,8 @@ a:hover {
 
 td a {
     overflow: hidden;
-    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+       text-overflow: ellipsis;
     white-space: nowrap;
     display: block;
 }
@@ -117,7 +118,8 @@ td a:visited {
     vertical-align: sub;
     padding-right: 0.75em;
     height: 1.2em;
-    filter: grayscale(.8) brightness(2);
+    -webkit-filter: grayscale(.8) brightness(2);
+            filter: grayscale(.8) brightness(2);
 }
 
 address {
