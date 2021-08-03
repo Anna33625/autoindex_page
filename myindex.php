@@ -20,7 +20,7 @@ class UserSettings
 		'*,t',
 		'*.lsz',
 		];
-	public $Time_Format = ' d-M-Y H:i ';
+	public $Time_Format = ' Y-m-d H:i ';
 	public $IconPath = '/_autoindex/icons';
 	public $nameWidth = 80;
 	public $nameFormat;
@@ -64,17 +64,19 @@ class AllImgs
 	{
 		$this->mapping = [
 			new IMG_Mapping(['gif', 'png', 'jpg', 'jpeg', 'tif', 'tiff', 'bmp', 'svg', 'raw'],
-					'image.svg', '[IMG]'),
-			new IMG_Mapping(['html', 'htm', 'shtml', 'php', 'phtml', 'css', 'js'],
-					'code.svg', '[HTM]'),
-			new IMG_Mapping(['txt', 'md5', 'c', 'cpp', 'cc', 'h', 'sh'],
-					'file-text.svg', '[TXT]'),
-			new IMG_Mapping(['gz', 'tgz', 'zip', 'Z', 'z', 'bin', 'exe'],
-					'file.svg', '[CMP]'),
-			new IMG_Mapping(['mpg', 'avi', 'mpeg', 'ram', 'wmv'],
-					'video.svg', '[VID]'),
-			new IMG_Mapping(['mp3', 'mp2', 'ogg', 'wav', 'wma', 'aac', 'mp4', 'rm'],
-					'music.svg', '[SND]'),
+                                        'image.svg', '[IMG]'),
+///                     new IMG_Mapping(['html', 'htm', 'shtml'],
+//                                      'html.svg', '[HTM]'),
+//                      new IMG_Mapping(['php', 'phtml', 'css', 'js'],
+//                                        'js.svg', '[JS]'),
+                        new IMG_Mapping(['txt', 'md5', 'c', 'cpp', 'cc', 'h', 'sh', 'html', 'htm', 'shtml', 'php', 'phtml', 'css', 'js'],
+                                        'file-text.svg', '[TXT]'),
+                        new IMG_Mapping(['gz', 'tgz', 'zip', 'Z', 'z', 'bin', 'exe'],
+                                        'file.svg', '[CMP]'),
+                        new IMG_Mapping(['mpg', 'avi', 'mpeg', 'ram', 'wmv'],
+                                        'video.svg', '[VID]'),
+                        new IMG_Mapping(['mp3', 'mp2', 'ogg', 'wav', 'wma', 'aac', 'mp4', 'rm'],
+                                        'music.svg', '[SND]'),
 		];
 
 		$this->default_img = new IMG_Mapping(null, 'file.svg', 'unknown', '');
@@ -188,7 +190,7 @@ function printOneEntry($base, $name, $fileStat, $setting)
 			$name = substr($name, 0, $setting->nameWidth - 3) . '...';
 		}
 		$buf .= sprintf($setting->nameFormat, htmlspecialchars($name, ENT_SUBSTITUTE) . "</a></td>");
-		if ($fileStat->mtime != -1)
+		if ($fileStat->mtime != -1 && $name != 'Parent Directory')
 			$buf .= '<td>' . date($setting->Time_Format, $fileStat->mtime) . '</td>';
 		else
 			$buf .= '<td>                   </td>';
@@ -196,7 +198,8 @@ function printOneEntry($base, $name, $fileStat, $setting)
 //			$buf .= sprintf("<td>%7ldk  </td>", ( $fileStat->size + 1023 ) / 1024);
 			$buf .= sprintf("<td>%7ldk  </td>", ( $fileStat->size));
 		else
-			$buf .= '<td>       -  </td>';
+//			$buf .= '<td>       -  </td>';
+                        $buf .= ($name == 'Parent Directory') ? '<td>         </td>' : '<td>       -  </td>';
 		$buf .= '<td>     </td>' . '</tr>' . $fileStat->img->desc;
 		$buf .= "\n";
 	}
@@ -346,7 +349,7 @@ if (isset($setting->HeaderName)) {
 }
 
 if ($using_fancyIndex) {
-	$header = "<div id=\"table-list\"><table id=\"table-content\">\n";
+	$header = "<div id=\"table-list\" role=\"table-list\" aria-labelledby=\"index-table\" tabindex=\"0\"><table id=\"table-content\">\n";
 } else {
 	$header = "<div id=\"table-list\"><table id=\"table-content\"><thead class=\"t-header\"><tr><th><a class=\"name\" href='?$NameSort'>";
 	$header .= sprintf($setting->nameFormat, 'Name</a></th>');
