@@ -191,7 +191,7 @@ function printOneEntry($base, $name, $fileStat, $setting)
 		else
 			$buf .= '<td>                   </td>';
 		if ($fileStat->size != -1)
-			$buf .= sprintf("<td>%7ldk  </td>", ( $fileStat->size));
+			$buf .= sprintf("<td>%7ldk  </td>", ( $fileStat->size + 1023 ) / 1024);
 		else
                         $buf .= ($name == 'Parent Directory') ? '<td>         </td>' : '<td>       -  </td>';
 		$buf .= '<td>     </td>' . '</tr>' . $fileStat->img->desc;
