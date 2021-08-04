@@ -76,7 +76,7 @@ class AllImgs
 		];
 
 		$this->default_img = new IMG_Mapping(null, 'file.svg', 'unknown', '');
-		$this->dir_img = new IMG_Mapping(null, 'folder.svg', 'directory', '');
+		$this->dir_img = new IMG_Mapping(null, 'folder-fill.svg', 'directory', '');
 		$this->parent_img = new IMG_Mapping(null, 'corner-left-up.svg', 'up', '');
 	}
 
