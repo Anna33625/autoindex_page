@@ -127,3 +127,15 @@ address {
     font-size: 0.8em;
     font-style: normal;
 }
+
+.hd-rd-text {
+    background-color: #f8fafb;
+    padding-left: 2.5em;
+    padding-top: 0.65em;
+    padding-bottom: 0.65em;
+    margin-bottom: 1.5em;
+/*     color: #5a5a5a; */
+    color: rgb(100,100,100);
+    font-size: 0.8em;
+
+}
