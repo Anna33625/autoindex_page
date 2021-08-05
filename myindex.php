@@ -209,9 +209,9 @@ function printIncludes($path, $name)
 		if (file_exists($filename) && !is_link($filename)) {
 			$content = file_get_contents($filename);
 			if ($n == $name) {
-				echo "<table>\n";
-				echo $content;
-				echo "</table>\n";
+				echo "<div class=\"hd-rd-text\">\n";
+                                echo $content;
+                                echo "</div>\n";
 			} else { // html format
 				echo $content;
 			}
