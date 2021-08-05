@@ -207,16 +207,17 @@ function printIncludes($path, $name)
 		$filename = $path . $n;
 
 		if (file_exists($filename) && !is_link($filename)) {
-			$content = file_get_contents($filename);
-			if ($n == $name) {
-				echo "<div class=\"hd-rd-text\">\n";
+                        $content = file_get_contents($filename);
+                        if ($n == $name) {
+                                $text = ($name == $setting->HeaderName ) ? 'class="header-text"' : 'class="readme-text"';
+                                echo "<div ${text}>\n";
                                 echo $content;
                                 echo "</div>\n";
-			} else { // html format
-				echo $content;
-			}
-			break;
-		}
+                        } else { // html format
+                                echo $content;
+                        }
+                        break;
+                }
 	}
 }
 
