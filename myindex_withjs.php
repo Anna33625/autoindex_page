@@ -210,7 +210,7 @@ function printIncludes($path, $name)
 		if (file_exists($filename) && !is_link($filename)) {
                         $content = file_get_contents($filename);
                         if ($n == $name) {
-                                $text = ($name == $setting->HeaderName ) ? 'class="header-text"' : 'class="readme-text"';
+                                $text = ($name == 'HEADER') ? 'class="header-text"' : 'class="readme-text"';
                                 echo "<div ${text}>\n";
                                 echo $content;
                                 echo "</div>\n";
