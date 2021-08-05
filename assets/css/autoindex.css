@@ -1,4 +1,3 @@
-New
 html {
     background:#edeff0;
 }
@@ -137,12 +136,8 @@ address {
 }
 
 .readme-text {
-/*     background-color: #f8fafb; */
-/*     padding-left: 2.5em; */
-/*     padding-top: 0.65em; */
     padding-bottom: 32px;
     margin-bottom: 32px;
-/*     color: #5a5a5a; */
     color: #4c4b4b;
     font-size: 0.9em;
     border-bottom: 1px solid #3333331c;
