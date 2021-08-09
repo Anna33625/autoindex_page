@@ -181,7 +181,7 @@ function printOneEntry($base, $name, $fileStat, $setting)
                                 $fileStat->isdir . '">' . sprintf($setting->nameFormat, htmlspecialchars($name, ENT_SUBSTITUTE) . "</a></td></tr>\n");
         } else {
                 $no_sort = ($name == 'Parent Directory') ? ' data-sort-method="none"' : '';
-                $buf = "<tr${no_sort}><td>" . '<a href="' . $encoded . $fileSata->isdir . '">' . '<img class="icon" fill="#FFFFFF" src="' . $setting->IconPath . '/' . $fileStat->img->imageName .
+                $buf = "<tr${no_sort}><td>" . '<a href="' . $encoded . $fileSata->isdir . '">' . '<img class="icon" src="' . $setting->IconPath . '/' . $fileStat->img->imageName .
                                 '" alt="' . $fileStat->img->alt . '">';
                 if (strlen($name) > $setting->nameWidth) {
                         $name = substr($name, 0, $setting->nameWidth - 3) . '...';
