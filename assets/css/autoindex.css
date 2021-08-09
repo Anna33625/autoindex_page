@@ -121,7 +121,7 @@ td a:visited {
     vertical-align: text-bottom;
     padding-right: 0.75em;
     height: 1.2em;
-     -webkit-filter: grayscale(.85) brightness(2.5);
+     -webkit-filter: grayscale(.8) brightness(2);
             filter: grayscale(.85) brightness(2.5);
 }
 
