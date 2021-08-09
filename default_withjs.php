@@ -337,8 +337,6 @@ echo "<!DOCTYPE html>
   <link rel=\"stylesheet\" href=\"/_autoindex/assets/css/autoindex.css\" />
   <script src=\"/_autoindex/assets/js/tablesort.js\"></script>
   <script src=\"/_autoindex/assets/js/tablesort.number.js\"></script>
-  <script src=\"/_autoindex/assets/js/tablesort.filesize.js\"></script>
-  <script src=\"/_autoindex/assets/js/tablesort.date.js\"></script>
   <title>Index of ", $uri, " - with JS</title></head>
   <body>
     <div class=\"content\">
@@ -353,7 +351,7 @@ if ($using_fancyIndex) {
 } else {
         $header = "<div id=\"table-list\"><table id=\"table-content\"><thead class=\"t-header\"><tr><th><a class=\"name\" href='?$NameSort' onclick=\"return false\" >";
 	$header .= sprintf($setting->nameFormat, 'Name</a></th>');
-	$header .= " <th><a href='?$ModSort' onclick=\"return false\">Last Modified</a></th>         <th data-sort-method='number'><a href='?$SizeSort' onclick=\"return false\">Size</a></th>  <th><a href='?$DescSort' onclick=\"return false\">Description</a></th></tr></thead>\n";
+	$header .= " <th data-sort-method='number'><a href='?$ModSort' onclick=\"return false\">Last Modified</a></th>         <th data-sort-method='number'><a href='?$SizeSort' onclick=\"return false\">Size</a></th>  <th><a href='?$DescSort' onclick=\"return false\">Description</a></th></tr></thead>\n";
 }
 echo $header;
 
