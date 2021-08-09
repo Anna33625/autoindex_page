@@ -191,7 +191,7 @@ function printOneEntry($base, $name, $fileStat, $setting)
 		else
 			$buf .= '<td>                   </td>';
 		if ($fileStat->size != -1)
-			$buf .= sprintf("<td>%7ldk  </td>", ( $fileStat->size + 1023 ) / 1024);
+			$buf .= sprintf("<td>%7ldk  </td>", ($fileStat->size + 1023) / 1024);
 		else
                         $buf .= ($name == 'Parent Directory') ? '<td>         </td>' : '<td>       -  </td>';
 		$buf .= '<td>     </td>' . '</tr>' . $fileStat->img->desc;
@@ -207,17 +207,17 @@ function printIncludes($path, $name)
 		$filename = $path . $n;
 
 		if (file_exists($filename) && !is_link($filename)) {
-                        $content = file_get_contents($filename);
-                        if ($n == $name) {
-                                $text = ($name == 'HEADER') ? 'class="header-text"' : 'class="readme-text"';
-                                echo "<div ${text}>\n";
-                                echo $content;
-                                echo "</div>\n";
-                        } else { // html format
-                                echo $content;
-                        }
-                        break;
-                }
+			$content = file_get_contents($filename);
+			if ($n == $name) {
+				$text = ($name == 'HEADER')  ? ' class="header-text"' : ' class="readme-text"';
+				echo "<div${text}>\n";
+				echo $content;
+				echo "</div>\n";
+			} else { // html format
+				echo $content;
+			}
+			break;
+		}
 	}
 }
 
@@ -344,11 +344,11 @@ if (isset($setting->HeaderName)) {
 }
 
 if ($using_fancyIndex) {
-	$header = "<div id=\"table-list\"><table id=\"table-content\">\n";
+	$header = "<div id=\"table-list\" role=\"table-list\" aria-labelledby=\"index-table\" tabindex=\"0\"><table id=\"table-content\">\n";
 } else {
 	$header = "<div id=\"table-list\"><table id=\"table-content\"><thead class=\"t-header\"><tr><th><a class=\"name\" href='?$NameSort'>";
 	$header .= sprintf($setting->nameFormat, 'Name</a></th>');
-	$header .= " <th><a href='?$ModSort'>Last modified</a></th>         <th><a href='?$SizeSort'>Size</a></th>  <th><a href='?$DescSort'>Description</a></th></tr></thead>\n";
+	$header .= " <th><a href='?$ModSort'>Last Modified</a></th>         <th><a href='?$SizeSort'>Size</a></th>  <th><a href='?$DescSort'>Description</a></th></tr></thead>\n";
 }
 echo $header;
 
