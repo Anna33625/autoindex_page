@@ -185,11 +185,8 @@ function printOneEntry($base, $name, $fileStat, $setting)
                                 '" alt="' . $fileStat->img->alt . '">';
                 if (strlen($name) > $setting->nameWidth) {
                         $name = substr($name, 0, $setting->nameWidth - 3) . '...';
-                }
-		if ($fileStat->size == -1)
-			$buf .= sprintf('*' . $setting->nameFormat, htmlspecialchars($name, ENT_SUBSTITUTE) . "</a></td>");
-		else
-	                $buf .= sprintf($setting->nameFormat, htmlspecialchars($name, ENT_SUBSTITUTE) . "</a></td>");
+                }	
+	        $buf .= sprintf($setting->nameFormat, htmlspecialchars($name, ENT_SUBSTITUTE) . "</a></td>");
                 if ($fileStat->mtime != -1 && $name != 'Parent Directory' )
 			$buf .= '<td data-sort=' . strtotime(date($setting->Time_Format, $fileStat->mtime)) . '>' . date($setting->Time_Format, $fileStat->mtime) . '</td>';
                 else
