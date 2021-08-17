@@ -24,11 +24,51 @@ h1 {
     padding-left:1.5em;
 }
 
+.colname:not(.no-sort) a{
+    position:relative;
+    display:inline-block;
+}
+
+.colname:not(.no-sort) a:after, .colname:not(.no-sort) a:before {
+    content: "";
+    float: right;
+    margin-top: 7px;
+    border-color: #404040 transparent;
+    border-style: solid;
+    border-width: 0 4px 4px;
+    visibility: visible;
+    opacity: .4;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.colname:not(.no-sort) a:after {
+    position: relative;
+    margin-top: 11px;
+    right: -8px;
+    transform: rotate(-180deg);
+    margin-left:5px;
+}
+
+.colname:not(.no-sort) a:before {
+    margin-top: 5px;
+}
+
+.colname[aria-sort=ascending]:not(.no-sort) a:before, 
+.colname[aria-sort=descending]:not(.no-sort) a:after {
+    opacity: .8;
+}
+
 #table-list {
     overflow-x: auto;
     background:white;
     margin-top: 32px;
     margin-bottom: 32px;
+    box-shadow: 0 0.55rem 1.25rem rgb(0 65 98 / 4%);
+    -webkit-box-shadow: 0 0.55rem 1.25rem rgb(0 65 98 / 4%);
+            box-shadow: 0 0.55rem 1.25rem rgb(0 65 98 / 4%);
 }
 
 table {
@@ -39,18 +79,14 @@ table {
     font-size: 0.88em;
     padding-left:10px;
     padding-right: 10px;
-    box-shadow: 0 0.55rem 1.25rem rgb(0 65 98 / 4%);
-    -webkit-box-shadow: 0 0.55rem 1.25rem rgb(0 65 98 / 4%);
-            box-shadow: 0 0.55rem 1.25rem rgb(0 65 98 / 4%);
 }
 
-tr:hover {
-  background-color: rgb(220 220 220) !important;
+tr:hover:not(:nth-child(1)) {
+  background-color: rgb(220 220 220);
 }
 
 .t-header th {
     font-size: 1em;
-    background-color: white;
     height: 1.8em;
 }
 
@@ -89,7 +125,7 @@ td:nth-child(3) {
     text-align: right;
 }
 
-tr:nth-child(odd) {
+tbody tr:nth-child(odd) {
     background-color: #f8fafb;
     border-top: 1px solid #edeff0;
     border-bottom: 1px solid #edeff0;
