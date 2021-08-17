@@ -344,11 +344,38 @@ if (isset($setting->HeaderName)) {
 }
 
 if ($using_fancyIndex) {
-	$header = "<div id=\"table-list\" role=\"table-list\" aria-labelledby=\"index-table\" tabindex=\"0\"><table id=\"table-content\">\n";
+	$header = "<div id=\"table-list\"><table id=\"table-content\">\n";
 } else {
-	$header = "<div id=\"table-list\"><table id=\"table-content\"><thead class=\"t-header\"><tr><th><a class=\"name\" href='?$NameSort'>";
+	if ($sortOrder == 'NA') {
+		$name_sort_order = ' aria-sort="ascending" ';
+		$date_sort_order = '';
+		$size_sort_order = '';
+	} elseif ($sortOrder == 'ND') {
+		$name_sort_order = ' aria-sort="descending" ';
+                $date_sort_order = '';
+                $size_sort_order = '';
+	}
+	if ($sortOrder == 'MA') {
+                $name_sort_order = '';
+                $date_sort_order = ' aria-sort="ascending" ';
+                $size_sort_order = '';
+        } elseif ($sortOrder == 'MD') {
+                $name_sort_order = '';
+                $date_sort_order = ' aria-sort="descending" ';
+                $size_sort_order = '';
+        }
+	if ($sortOrder== 'SA') {
+                $name_sort_order = '';
+                $date_sort_order = '';
+                $size_sort_order = ' aria-sort="ascending" ';
+        } elseif ($sortOrder == 'SD') {
+                $name_sort_order = '';
+                $date_sort_order = '';
+                $size_sort_order = ' aria-sort="descending" ';
+        }
+	$header = "<div id=\"table-list\"><table id=\"table-content\"><thead class=\"t-header\"><tr><th class=\"colname\" ${name_sort_order}><a class=\"name\" href='?$NameSort'>";
 	$header .= sprintf($setting->nameFormat, 'Name</a></th>');
-	$header .= " <th><a href='?$ModSort'>Last Modified</a></th>         <th><a href='?$SizeSort'>Size</a></th>  <th><a href='?$DescSort'>Description</a></th></tr></thead>\n";
+	$header .= " <th class=\"colname\" ${date_sort_order}><a href='?$ModSort'>Last Modified</a></th>         <th class=\"colname\" ${size_sort_order}><a href='?$SizeSort'>Size</a></th>  <th><a href='?$DescSort'>Description</a></th></tr></thead>\n";
 }
 echo $header;
 
