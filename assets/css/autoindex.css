@@ -61,6 +61,11 @@ h1 {
     opacity: .8;
 }
 
+.colname:not(.no-sort):not([aria-sort=descending]) a:hover:before,
+.colname:not(.no-sort):not([aria-sort]) a:hover:before {
+    opacity: 1
+}
+
 #table-list {
     overflow-x: auto;
     background:white;
