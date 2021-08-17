@@ -186,7 +186,10 @@ function printOneEntry($base, $name, $fileStat, $setting)
                 if (strlen($name) > $setting->nameWidth) {
                         $name = substr($name, 0, $setting->nameWidth - 3) . '...';
                 }
-                $buf .= sprintf($setting->nameFormat, htmlspecialchars($name, ENT_SUBSTITUTE) . "</a></td>");
+		if ($fileStat->size == -1)
+			$buf .= sprintf('*' . $setting->nameFormat, htmlspecialchars($name, ENT_SUBSTITUTE) . "</a></td>");
+		else
+	                $buf .= sprintf($setting->nameFormat, htmlspecialchars($name, ENT_SUBSTITUTE) . "</a></td>");
                 if ($fileStat->mtime != -1 && $name != 'Parent Directory' )
 			$buf .= '<td data-sort=' . strtotime(date($setting->Time_Format, $fileStat->mtime)) . '>' . date($setting->Time_Format, $fileStat->mtime) . '</td>';
                 else
@@ -349,9 +352,9 @@ if (isset($setting->HeaderName)) {
 if ($using_fancyIndex) {
         $header = "<div id=\"table-list\"><table id=\"table-content\">\n";
 } else {
-        $header = "<div id=\"table-list\"><table id=\"table-content\"><thead class=\"t-header\"><tr><th><a class=\"name\" href='?$NameSort' onclick=\"return false\" >";
+        $header = "<div id=\"table-list\"><table id=\"table-content\"><thead class=\"t-header\"><tr><th class=\"colname\"><a class=\"name\" href='?$NameSort' onclick=\"return false\" >";
 	$header .= sprintf($setting->nameFormat, 'Name</a></th>');
-	$header .= " <th data-sort-method='number'><a href='?$ModSort' onclick=\"return false\">Last Modified</a></th>         <th data-sort-method='number'><a href='?$SizeSort' onclick=\"return false\">Size</a></th>  <th><a href='?$DescSort' onclick=\"return false\">Description</a></th></tr></thead>\n";
+	$header .= " <th class=\"colname\" data-sort-method='number'><a href='?$ModSort' onclick=\"return false\">Last Modified</a></th>         <th class=\"colname\" data-sort-method='number'><a href='?$SizeSort' onclick=\"return false\">Size</a></th>  <th><a href='?$DescSort' onclick=\"return false\">Description</a></th></tr></thead>\n";
 }
 echo $header;
 
