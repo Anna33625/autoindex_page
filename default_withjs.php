@@ -240,7 +240,7 @@ function printFileList($list, $base_uri, $setting)
 
 function cmpNA($a, $b)
 {
-	return strcmp($a->name, $b->name);
+	return strcasecmp($a->name, $b->name);
 }
 
 function cmpND($a, $b)
